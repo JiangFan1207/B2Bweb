@@ -1,0 +1,62 @@
+@charset "utf-8";
+html,body,div,p,span,
+form,input,textarea,select,button,
+em,i,b,
+ul,ol,li,
+dl,dt,dd, 
+table,catpiton,tbody,tfoot,tr,td,th,img,
+h1,h2,h3,h4{margin:0;padding:0;} 
+body {
+	width: 100%;
+}
+img {
+	border-style:none;
+	vertical-align: middle;
+}
+ul, ol, li, dl, dd, dt, hgroup, p, blockquote, figure, form, fieldset, legend, pre, abbr {
+	list-style-type: none;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-size:100%;
+	font-weight: normal;
+}
+em,i,cite{font-style:normal}
+input, select {
+	border: 0;
+}
+.clear {
+	clear: both;
+	height: 0;
+	line-height: 0;
+	font-size: 0;
+}
+.clearfix{zoom:1;}
+.clearfix:after{
+	display:block;
+	content:".";
+	clear:both;
+	height:0;
+	visibility:hidden
+}
+/*font icon*/
+@font-face {font-family: "emkexicon";
+  src: url('/web/iconfonts/emkexicon.eot'); /* IE9*/
+  src: url('/web/iconfonts/emkexicon.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('/web/iconfonts/emkexicon.woff') format('woff'), /* chrome firefox */
+  url('/web/iconfonts/emkexicon.ttf') format('truetype'), /* chrome firefox opera safari, Android, iOS 4.2+*/
+  url('/web/iconfonts/emkexicon.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"emkexicon" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+/*input button with hand*/
+input[type="button"],input[type="submit"]{cursor:pointer}
+
+/*通用容器带边距*/
+.comm-c-20{background:#fff;padding:20px 20px 40px;}

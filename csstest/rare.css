@@ -1,0 +1,108 @@
+@charset "utf-8";
+.Empty_background_ball_one{width: 100%;
+	margin: 0 auto;
+	min-width: 1000px;
+    background:#f7f7f7 url(http://img1.emkex.com/lu/cn/new/style/images/magnet20151113.jpg) center no-repeat;
+	height:260px;}
+.Empty_A5SSM_alternative{width:1000px;margin:0 auto;padding-top:240px;}
+.Empty_A5SSM_alternative a{border:1px solid #00A9FF; border-radius:3px; color:#00A9FF; font-size:18px; background:none; font-family: "Microsoft YaHei"; 
+text-align:center;width:100px; height:29px; line-height:29px;  display:block; margin:0px auto;}
+
+.Empty_alone_along_one a.Empty_qimo8_along_one{float:left; margin-left: 20px;margin-top:5px;width:80px; height:20px; line-height:20px; text-align:center;
+ background:#fff; display:inline-block; font-size:14px; color:#333;}
+
+
+.Empty_A5SSM_abundant_acceleration{width:1000px; margin:0 auto;padding:120px 0;}
+.Empty_A5SSM_abundant_acceleration p{color:#333; font-size:36px; text-align:center;}
+.Empty_A5SSM_abundant_acceleration p a{color:#00A9FF; font-size:14px; margin-left:10px;}
+
+.Empty_declare_deduce_upstair ul li a{width:100px; display:inline-block; font-size:14px;}
+.Empty_declare_deduce_downstair p.cap_deduce_downstair_four {
+	text-align:center;
+	width: 126px;
+	height: 29px;
+	background: #E5E5E5;
+	font-size: 14px;
+	color: #656565;
+	line-height: 29px;
+	margin-top: 40px;
+	margin-bottom: 30px;
+}
+.Empty_declare_comprehensive_one {
+	margin-left: 60px;
+	margin-bottom: 20px;
+}
+.Empty_declare_comprehensive_one .Empty_declare_compel {
+	width:400px;
+	float: left;
+	color: #999;
+	font-size: 14px;
+	line-height: 30px;
+}
+.Empty_declare_comprehensive_one span {
+	font-size: 14px;
+	color: #333;
+	display: block;
+	float: left;
+	height: 30px;
+	line-height: 30px;
+}
+.Empty_declare_congratulation_consent {
+	width: 500px;
+	margin-left: 70px;
+	margin-bottom: 20px;
+	height: 68px;
+}
+.Empty_declare_congratulation_consent span {
+	font-size: 14px;
+	color: #333;
+	display: block;
+	float: left;
+	text-align: right;
+}
+.Empty_declare_comprehensive_one b {
+	font-weight: normal;
+	color: #FF0000;
+	font-size: 12px;
+	margin-left:90px;
+}
+/*select*/
+.Main_Title{border-left:7px solid #41AAF1; padding-left:15px; margin-bottom:5Px; background:#E8E8E8; color:#1EABD5; font-size:13px; line-height:30px;height: 30px; position: relative}
+*+html .Main_Title{ height:30px;}
+.SelectBox{height:23px;background:#fff url(http://www.emkex.cn/lu/cn/style/magnet/css/images/SelectIcon1.png) no-repeat right;color: #444; font-size: 12px; border:1px solid #E8E8E8;cursor:pointer;position:relative;_filter:alpha(opacity=0);}
+.SelectBox label{padding-left:10px;font-size:12px;z-index:2; color: #444; line-height: 23px; height: 23px; display: block;}
+.SelectBox .select{padding-left:10px;width:100%; height:23px; line-height:23px; z-index:4;position:absolute;top:0;left:0;margin:0;padding:0;opacity:0; *margin-top:12px; filter:alpha(opacity=0);cursor:pointer; font-size: 12px;}
+
+
+.Empty_A5SSM_accidental{width:1000px; margin:0 auto;padding:25px 0;}
+.Empty_A5SSM_accidental_alcohol{width:385px; float:left;}
+.Empty_A5SSM_alcohol{width:383px; height:230px; border:1px solid #ccc; border-top:medium none;}
+/*稀土市场改版注释
+.Empty_A5SSM_alphabet_alter{ float:right; width:576px;}
+*/
+.Empty_A5SSM_alphabet{width:574px; height:231px; border:1px solid #ccc; border-top:medium none;}
+.Empty_A5SSM_alphabet ul li{ float:left;}
+.Empty_A5SSM_alphabet ul li h3{ font-size:22px; color:#333; line-height:182%; text-align:center;}
+.Empty_A5SSM_alphabet ul li a{color:#333; font-size:14px; display:block; line-height:214%; width:220px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+.Empty_A5SSM_alphabet ul li a:hover{color:#41AAF1}
+.Empty_A5SSM_alphabet ul li.Empty_A5SSM_alphab_one{padding-left:15px;}
+.Empty_A5SSM_alphabet ul li.Empty_A5SSM_alphab_two{ height:140px; width:1px; background:#ccc;margin-left: 40px;margin-top: 50px;
+margin-right: 60px;}
+/*must be deleted after 2015.12.25*/
+.left-date{width:140px;overflow:hidden;
+}
+.left-date em{float:left;display:block;width:60px;height:88px;}
+.left-date .d0,.left-date .d1,
+.left-date .d2,.left-date .d3,.left-date .d4,.left-date .d5,.left-date .d6
+,.left-date .d7,.left-date .d8,.left-date .d9{background:url(/activity/rare/images/rare-0-9.png) no-repeat;}
+.left-date .d0{background-position:-7px 0}
+.left-date .d1{background-position:-7px -144px}
+.left-date .d2{background-position:-7px -292px}
+.left-date .d3{background-position:-7px -438px}
+.left-date .d4{background-position:-7px -586px}
+.left-date .d5{background-position:-7px -734px}
+.left-date .d6{background-position:-7px -880px}
+.left-date .d7{background-position:-7px -1024px}
+.left-date .d8{background-position:-7px -1168px}
+.left-date .d9{background-position:-7px -1318px}
+#hot-link{position:absolute;width:237px;height:90px;left:50%;top:50%;margin-top:-37px;margin-left:-90px;}

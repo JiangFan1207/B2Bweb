@@ -1,0 +1,257 @@
+body{
+    font:14px/1.5 "Microsoft YaHei","\u5FAE\u8F6F\u96C5\u9ED1","Arial","SimSun","\u5B8B\u4F53";
+    color:#555;
+    background-color: #000; 
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, input, textarea, p, blockquote, th, td{
+    margin:0;
+    padding:0;
+}
+ul,li{
+    list-style: none;
+}
+em,i,b{font-style: normal}
+h1,h2,h3{font-weight: normal}
+.main-wraper,.header{
+     width:1280px;
+    margin:0 auto;
+}
+.header{
+    width:1256px;
+    height:87px;
+    padding:6px 0 6px 24px;
+    overflow: hidden;
+}
+.header-title{
+    width:200px;
+    color:#a1a1a1;
+}
+.header-title span{
+    font-size: 25px;
+}
+.header-title h1{font-size: 48px;line-height: 1;}
+.arrow-up,
+.arrow-down,
+.arrow-line{
+    width:36px;
+    height:80px;
+    background-color: #000;
+    margin-top:6px;
+    margin-right: 5px;
+    text-align:center;
+}
+.arrow-line i{
+	display:block;
+	width:100%;
+	height:3px;
+	margin-top:43px;
+	background-color:#555;
+}
+.arrow-line b{display:none}
+.arrow-up i,.arrow-down b{
+	display:block;
+	width:0;
+	height:0;
+	border:solid 18px #e60012;
+	border-top-width:0;
+	border-bottom-width:29px;
+	border-left-color:transparent;
+	border-right-color:transparent;
+	_border-left-color:#fff;
+	_border-right-color:#fff;
+	margin:0 auto;
+}
+.arrow-down b{
+	border-top-color:#4ca92a;
+	border-top-width:29px;
+	border-bottom-width:0;
+}
+.arrow-up b,.arrow-down i{
+	display:block;
+	width:7px;
+	height:49px;
+	background-color:#f00;
+	margin:0 auto;
+}
+.arrow-down i{
+	background-color:#4ca92a
+}
+.header-title,
+.header .arrow-up,
+.header .arrow-down,
+.arrow-line,
+.price-change,
+.price-loop{
+    float:left;
+}
+.price-change{
+	width:347px;padding-right:20px;padding-left:10px;
+}
+.price-up,
+.price-loop .up{
+    color:#b90000;
+}
+.price-down,
+.price-loop .down{
+    color:#4ca92a;
+}
+.price-line{
+	color:#555;
+}
+.change-point{
+    font-family: Impact,sans-serif;
+    float:left;
+    width:220px;
+    height:85px;
+    line-height: 1;
+    font-size:96px;
+    -webkit-transform: skewX(-10deg);
+    transform: skewX(-10deg);
+    text-align:center;
+}
+.change-pct,
+.cur-price{
+    display: block;
+    margin-left:256px;
+    line-height: 1;
+    white-space:nowrap;
+    font-style: italic;
+}
+.price-up .cur-price:before{
+	content:"\2191";
+	font-style:normal;
+}
+.price-down .cur-price:before{
+	content:"\2193";
+	font-style:normal;
+}
+.change-pct{
+    padding-top:30px;
+    font-size: 24px;
+}
+.cur-price{
+    font-size: 24px;
+}
+.price-loop{width:676px;padding-left:3px;background:url(http://img1.emkex.com/lu/cn/assets/icons/mkt-dynamic-price.png) repeat;
+    background-position: 0 -184px;overflow: hidden}
+.price-loop li{
+    float:left;
+    width:214px;
+   height: 42px;
+   line-height: 42px;
+   white-space:nowrap;
+    font-size: 28px;
+}
+.price-loop span{padding-left:12px}
+.date-switch{background-color:#131313;font-size: 18px}
+.date-switch li{float:left;width:133px;line-height:44px;color:#626262;text-align: center;cursor: pointer;}
+.date-switch .active{
+    background-color:#090909;
+    color:#fff;
+}
+.Rare-earth-price-data{
+    position:relative;
+    height:528px;
+    overflow: hidden;
+}
+.time{
+    position:absolute;
+    top:10px;
+    right:284px;
+    font-size: 32px;
+    color:#555;
+}
+.chart-data{
+    float:left;
+    width:1005px;
+    height:360px;
+    margin-left:10px;
+}
+.history-data{float:left;width:995px;height:150px;margin-left:20px;border:solid 1px #393939;}
+.price-data-list-now{
+    position:relative;top:-355px;left:30px;width:233px;
+    float:left;
+    line-height: 1.42857099;
+    text-align: center;
+    color:#fff;
+}
+.cur-price-data-list{width:100%;
+	border:solid 2px #0d0d0d;
+	border-bottom-width:0;
+    border-collapse: collapse;}
+
+.cur-price-data-list td{
+	height:19px;
+	line-height:19px;
+    border-bottom:solid 3px #0d0d0d;
+}
+.cur-price-data-list td:not(:last-child),
+.cur-price-data-list th:not(:last-child){
+    border-right:solid 3px #0d0d0d;
+    border-bottom-color: #0d0d0d;
+}
+.cur-price-data-list .up td:not(:last-child){
+    border-right-color: #1a0000;
+    border-bottom-color: #1a0000;
+    color:#ff7f7f;
+    text-shadow: 0 0 2px #4c0000;
+}
+.cur-price-data-list .down td:not(:last-child){
+    border-right-color:#041705;
+    border-bottom-color:#041705;
+    color:#60e667;
+    text-shadow: 0 0 2px #0b420e;
+}
+.cur-price-data-list tr:last-child td{
+	height:20px;
+	line-height:20px;
+	border-bottom-width:0;
+}
+.cur-price-data-list td:last-child:before{
+    content:"\2014"
+}
+.cur-price-data-list .up  td:last-child:before,
+.cur-price-data-list .down  td:last-child:before{
+    display: inline-block;
+    content: "";
+    width:9px;
+    height:14px;
+    background:url(http://img1.emkex.com/lu/cn/assets/icons/mkt-dynamic-price.png) no-repeat;
+}
+.cur-price-data-list .up  td:last-child:before{
+ background-position: -25px -273px
+}
+
+.cur-price-data-list .down  td:last-child:before{
+ background-position: -2px -273px
+}
+.history-data{position:relative;}
+.history-data ul{position:absolute;left:5px;bottom:2px;}
+.history-data li{display: inline-block;;width:18px;height:113px;background:red;vertical-align: bottom}
+.history-data .up{position:relative;}
+.history-data .up:before{
+   position:absolute;
+   top:5px;
+   bottom:5px;
+   left:50%;
+    content:"";
+    width:2px;
+    background-color:#000;
+    box-shadow: inset 0 0 
+    
+}
+.history-data .down{
+    background-color:#4ca92a;
+}
+.mkt-notice{
+    margin-left:538px;padding-left:40px;line-height:44px;background-color:#131313;color:red;font-size:18px
+}
+.mkt-notice i{
+    display: inline-block;
+    width:38px;
+    height:30px;
+   background:url(http://img1.emkex.com/lu/cn/assets/icons/mkt-dynamic-price.png) no-repeat;
+   background-position:-38px -2px;
+   margin-right: 6px;
+   vertical-align: middle;
+}

@@ -1,0 +1,628 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>稀土原材料价格分析图-亿迈克思磁材市场</title>
+        <link rel="stylesheet" type="text/css" href="csstest/rare_trend.css"/>
+   		<script src="testxtycl/echarts.js"></script>
+   		<script src="testxtycl/jquery-1.8.3.min.js"></script>
+   		<script src="testxtycl/MSClass_split.js" type="text/javascript" charset="utf-8"></script>
+        <style type="text/css">
+        	.price-loop li{cursor: pointer;}
+        </style>
+    </head>
+    <body>
+        <!--头部-->
+        <div class="header">
+            <div class="header-title">
+                <span id="date"></span>
+                <h1 id="mainType"></h1>
+            </div>
+            <div class="price-change price-up" id="price-change">
+                <span class="change-point" id="currentPrice"></span>
+                <span class="change-pct" id="changePercent"></span>
+                <span class="cur-price" id="changeValue">
+                </span>
+            </div>
+            <ul class="price-loop" id="priceloop">
+                <!-- <li>金属镧<span class="up">2.95</span></li> -->
+            </ul>
+        </div>
+        <!--content-->
+        <div class="main-wraper">
+            <ul class="date-switch" style="float:left">
+                
+                <li id="week-line" class="active">周线</li>
+                <li id="month-line">月线</li>
+                <li id="year-line">年线</li>
+            </ul>
+            <p class="mkt-notice">
+                <i></i><span id="datespan"></span>中国稀土市场原材料价格走势
+            </p>
+            <div class="Rare-earth-price-data">
+                <span class="time" id="nowTime"></span>
+                <script type="text/javascript">
+                	var dateTime = '2017-03-24 17:09:19';
+                	var time = new Date(Date.parse(dateTime.replace(/-/g,"/")));
+                	var longtime = time.getTime();
+                	
+                	tick();
+	                
+                	function tick(){
+                		$("#nowTime").html("MA "+ getTime() +" (北京时间)");
+                		setTimeout(function(){
+                			longtime += 60*1000;
+                			tick();
+                    	}, 60*1000);
+                	}
+                	
+                	function getTime(){
+                		time = new Date();
+                		time.setTime(longtime);
+    	                var hour = zfill(time.getHours(),2);
+    	                var minute = zfill(time.getMinutes(),2);
+    	                //var second = zfill(time.getSeconds(),2);
+    	                return hour+":"+minute/* +":"+second */;
+                	}
+                	//时分秒按两位显示
+                	function zfill(num, size) {
+                	    var s = "0" + num;
+                	    return s.substr(s.length-size);
+                	}
+                </script>
+                <div id="chart-data" class="chart-data"></div>
+                <div class="history-data" id="history-data"></div>
+                
+<script type="text/javascript">
+var emkex = "7CGY7ECK0I7NNGL5XXP1P6R0UMGD2QTC_2017-03-10+17%3A09%3A19_c00e95070e091b8ba9b48e96faa92bc4";
+$.ajaxSetup({headers: {em:emkex}});
+var index = 0;
+var typeArr = ['镨钕金属','金属钕','金属铈','镝铁合金','钬铁合金','金属镧','钆铁合金'];
+// 数据意义：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
+
+var dom1 = document.getElementById("chart-data");
+var myChart1 = echarts.init(dom1);//k线图
+var dom2 = document.getElementById("history-data");
+var myChart2 = echarts.init(dom2);//柱状图
+
+//定义数据是红(涨)还是绿(跌)不涨不跌(灰) -1绿0灰1红
+var color=['#0f0','#555','#f00']
+
+loadData();
+
+/* $(".date-switch li").on("click",function(e){
+    $(this).addClass("active").siblings().removeClass("active");
+    loadData();
+}) */
+
+function splitData(rawData) {
+    var categoryData = [];
+    var values = []
+    for (var i = 0; i < rawData.length; i++) {
+        categoryData.push(rawData[i].splice(0, 1)[0]);
+        values.push(rawData[i])
+    }
+    return {
+        categoryData: categoryData,
+        values: values
+    };
+}
+
+function calculateMA(dayCount,data) {
+    var result = [];
+    for (var i = 0, len = data.values.length; i < len; i++) {
+        if (i < dayCount) {
+            result.push('-');
+            continue;
+        }
+        var sum = 0;
+        for (var j = 0; j < dayCount; j++) {
+            sum += data.values[i - j][1];
+        }
+        result.push(sum / dayCount);
+    }
+    return result;
+}
+//格式化数字
+function formatNumber(num, pattern){
+	var strarr = num ? num.toString().split('.') : ['0'];
+	var fmtarr = pattern ? pattern.split('.') : [''];
+	var retstr='';
+
+	// 整数部分
+	var str = strarr[0];
+	var fmt = fmtarr[0];
+	var i = str.length-1;
+	var comma = false;
+	for(var f=fmt.length-1;f>=0;f--){
+		switch(fmt.substr(f,1)){
+			case '#':
+				if(i>=0 ) retstr = str.substr(i--,1) + retstr;
+				break;
+			case '0':
+				if(i>=0) retstr = str.substr(i--,1) + retstr;
+				else retstr = '0' + retstr;
+				break;
+			case ',':
+				comma = true;
+				retstr=','+retstr;
+				break;
+		}
+	}
+	if(i>=0){
+		if(comma){
+			var l = str.length;
+			for(;i>=0;i--){
+				retstr = str.substr(i,1) + retstr;
+				if(i>0 && ((l-i)%3)==0) 
+					retstr = ',' + retstr;
+			}
+		}else 
+			retstr = str.substr(0,i+1) + retstr;
+	}
+
+	retstr = retstr+'.';
+	
+	//小数部分
+	str = strarr.length>1 ? strarr[1] : '';
+	fmt = fmtarr.length>1 ? fmtarr[1] : '';
+	i=0;
+	for(var f=0;f<fmt.length;f++){
+		switch(fmt.substr(f,1)){
+			case '#':
+				if(i<str.length) retstr+=str.substr(i++,1);
+				break;
+			case '0':
+				if(i<str.length) retstr+= str.substr(i++,1);
+				else retstr+='0';
+				break;
+		}
+	}
+	
+	return retstr.replace(/^,+/,'').replace(/\.$/,'');
+}
+
+// 动态异步加载数据
+function loadData(name){
+	var dataName = typeArr[index];
+	if(name){
+		dataName = name;
+	}
+	$.ajax({
+		url:'ajaxtrend',
+		type:'post',
+		dataType:'json',
+		data:{'name':dataName},
+		success:function(result){
+			if(result == null || result == "")return;
+			var head = result.rpvo;
+			var chart = result.rptvo;
+			var monthPrices = result.rpmvo.monthPrices;
+			
+			var key = typeArr[index];
+			/***** 头部显示的数据 *****/
+			$("#date").html(head.date);
+			$("#datespan").html(head.date);
+			$("#mainType").html(head.type);
+			$("#price-change").removeClass();
+			if(head.updown>0){
+				$("#price-change").addClass("price-up").addClass("price-change");
+			}else if(head.updown<0){
+				$("#price-change").addClass("price-down").addClass("price-change");
+			} else{//暂没有没有涨跌情况时的样式
+				$("#price-change").addClass("price-line").addClass("price-change");
+			}
+			var price = head.price+"";
+			var str = price.split(".")[0];
+			$("#currentPrice").html(formatNumber(price,"#.00"));
+			if(str.length >= 3){
+				$("#currentPrice").css("font-size","84px");
+			}
+			$("#changePercent").html(formatNumber(head.changePercent*100,"#.00")+'%');
+			$("#changeValue").html(formatNumber(Math.abs(head.changeValue),"#.00")+'<span style="font-size:14px">(万元)</span>');
+			$("#priceloop").empty();
+			for(var k in head.otherPrices){
+				var name = k.split("_")[0];
+				var change = k.split("_")[1];
+				if(name != key){
+					var price = formatNumber(head.otherPrices[k],"#.00");
+					var html = "<li onclick =loadData('"+name+"')>"+name;
+					if(change == "1"){
+						html += '<span class="up">'+price+'</span></li>';
+					}else if(change == "0"){
+						html += '<span>'+price+'</span></li>';
+					}else{
+						html += '<span class="down">'+price+'</span></li>';
+					}
+					$("#priceloop").append(html);
+				}
+			}
+			
+			/***** 走势图区域数据 *****/
+			var data = splitData(chart);
+			myChart1.setOption({ 
+					title: {
+				       text: '稀土原材料指数',
+				        left: 0,
+				        show:false
+				    },
+				    tooltip: {
+				        trigger: 'axis',
+				        axisPointer: {
+				            type: 'line'
+				        },
+			            formatter: function(param){
+			            	var ary = param[0].data;
+				            return '价格走势<br/>日期：'+ param[0].name +'<br/>最高：'+ ary[3] +'(万元)<br/>最低：'+ ary[2]+'(万元)';
+			            }
+				    },
+				    legend: {
+				        top:'15px',
+				       //data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30'],
+				       data: [{name:'日K'}, {name:'MA5'}, {name:'MA10'}, {name:'MA20'}, {name:'MA30'}]
+				       //show:false
+				    },
+				    grid: {
+				        left: '5%',
+				        right: '10px',
+				        bottom: '20px',
+				    },
+				    xAxis: {
+				        type: 'category',
+				        data: data.categoryData,
+				        scale: true,
+				        boundaryGap : false,
+				        axisLine: {onZero: false,show:false},/*X轴坐标线*/
+				        splitLine: {show: false},
+				        splitNumber: 20,
+				        //刻度标签
+				        axisLabel:{
+				            show:false
+				        },
+				        min: 'dataMin',
+				        max: 'dataMax'
+				    },
+				    yAxis: {
+				        scale: true,
+				        axisLine:{show:false},
+				        splitLine: {show: true,lineStyle:{type:'dashed',color:'#181818'}},
+				        splitArea: {
+				            show: false
+				        },
+				        //刻度标签
+				        axisLabel:{
+				            textStyle:{color:'red',fontWeight:'bold'}
+				        }
+				    },
+				    dataZoom: [
+				        {
+				            type: 'inside',
+				            start: 0,
+				            end: 100
+				        },
+				        {
+				            show: false,
+				            type: 'slider',
+				            y: '100%',
+				            start:0,
+				            end: 100
+				        }
+				    ],
+				   series:[{
+					   name: '日K',
+					   data: data.values,
+					   type: 'candlestick',
+					   itemStyle:{
+			                normal:{
+			                    color:'transparent',
+			                    borderColor:"#ca4343",
+			                    color0:'#4ca92a',
+			                    borderColor0:"#4ca92a",
+			                }
+			           }
+				   },
+			        {
+					   name: 'MA5',
+					   type: 'line',
+			           data: calculateMA(5,data),
+			           smooth: true,
+			           lineStyle: {
+			               normal: {opacity: 0.5,color:'#f0f'}
+			           }
+			        },
+			        {
+			        	name: 'MA10',
+			            type: 'line',
+			            data: calculateMA(10,data),
+			            smooth: true,
+			            lineStyle: {
+			                normal: {opacity: 0.5}
+			            }
+			        },
+			        {
+			        	name: 'MA20',
+			            type: 'line',
+			            data: calculateMA(20,data),
+			            smooth: true,
+			            lineStyle: {
+			                normal: {opacity: 0.5}
+			            }
+			        },
+			        {
+			        	name: 'MA30',
+			            type: 'line',
+			            data: calculateMA(30,data),
+			            smooth: true,
+			            lineStyle: {
+			                normal: {opacity: 0.5,color:'#0f0'}
+			            }
+			        }]
+			});
+			
+			/*******底部柱状图*********/
+			var months = [];//x轴的时间数组
+			for(var month in monthPrices){
+				months.push(month); //把时间放进去
+			}
+			
+			var jsonArr = []; //定义数组接收动态添加的JSON
+			var jsonElem = {};//接收动态的JSON
+			var dataArr = [];//x轴时间数组
+			
+			jsonElem.type = "bar";
+			jsonElem.name = "价格走势:";
+			jsonElem.data = [];//插件里series的data
+			
+			for(var i=0; i < months.length;i++){
+				//走势数据及颜色控制
+				jsonElem.data.push({"value":monthPrices[months[i]].data[0],"itemStyle":{"normal":{color: color[monthPrices[months[i]].color[0]]}}});
+				//柱状图头部显示数据
+				jsonElem.label= {normal: {show: true,position: "top",textStyle:{fontSize:10}}};
+				//x轴时间
+				dataArr.push({"value":months[i],textStyle:{fontSize:12}});
+			}
+			jsonArr.push(jsonElem);
+			
+			myChart2.setOption({ 
+				/* tooltip: {
+		        	trigger: 'item'
+			    }, */
+			    tooltip : {
+			        trigger: 'axis',
+			        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+			            type : 'line'        // 默认为直线，可选为：'line' | 'shadow'
+			        }
+			    },
+			    calculable: true,
+			    grid: {
+			        top:'10%',
+			        left: '1%',
+			        right: '1%',
+			        bottom: '3%',
+			        containLabel: true
+			    },
+			    xAxis: [
+			        {
+			            type: 'category',
+			            show: true,
+			            axisLabel:{
+			            	textStyle:{color:'#a8a8a8'}
+			            }, 
+			            axisTick: {
+			                alignWithLabel: true
+			            },
+			            data:dataArr
+			        }
+			    ],
+			    yAxis: [
+			        {
+			            type: 'value',
+			            show: false
+			        }
+			    ],
+				series:jsonArr
+			});
+		}
+	});
+	
+}
+$(function (){
+	setTimeout(function(){
+		index = (index+1) % typeArr.length;
+		loadData();
+	}, 15*1000);
+})
+</script>
+				<div class="price-data-list-now">
+				 <table class="cur-price-data-list">
+                        <thead>
+                            <tr><th style="width:76px;">品名</th><th>价格(元/公斤)</th><th style="width:35px;">涨跌</th></tr>
+                        </thead>
+                 </table>
+                 <div id="scrollTable">
+				<table class="cur-price-data-list">
+                    <tbody>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N30</td>
+                    			<td>113-115</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class='up'>
+                    			<td style="width:76px;">N33</td>
+                    			<td>115-124</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N35</td>
+                    			<td>123-128</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class='up'>
+                    			<td style="width:76px;">N38</td>
+                    			<td>128-135</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N40</td>
+                    			<td>133-136</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N42</td>
+                    			<td>136-142</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N45</td>
+                    			<td>140-145</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class='down'>
+                    			<td style="width:76px;">N48</td>
+                    			<td>145-154</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N50</td>
+                    			<td>155-160</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N52</td>
+                    			<td>158-168</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N35M</td>
+                    			<td>123-133</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N38M</td>
+                    			<td>133-138</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N40M</td>
+                    			<td>136-141</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N42M</td>
+                    			<td>140-148</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N45M</td>
+                    			<td>148-155</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N48M</td>
+                    			<td>155-165</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class='down'>
+                    			<td style="width:76px;">N50M</td>
+                    			<td>165-174</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N35H</td>
+                    			<td>140-145</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N38H</td>
+                    			<td>145-155</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class='up'>
+                    			<td style="width:76px;">N40H</td>
+                    			<td>160-171</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N42H</td>
+                    			<td>165-175</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N45H</td>
+                    			<td>170-180</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N48H</td>
+                    			<td>180-190</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class='down'>
+                    			<td style="width:76px;">N50H</td>
+                    			<td>200-209</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N40SH</td>
+                    			<td>190.0</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N35UH</td>
+                    			<td>230.0</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N38UH</td>
+                    			<td>240.0</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    		<tr class=''>
+                    			<td style="width:76px;">N35EH</td>
+                    			<td>310-320</td>
+                    			<td style="width:35px;"></td>
+                    		</tr>
+                    	
+                    </tbody>
+                </table>
+                </div>
+				</div>
+                
+                <script type="text/javascript">
+                (function(){
+                	new Marquee("scrollTable",0,4,233,486,100,2000,1000,22);
+                	$(".cur-price-data-list").css("width","233px");
+                })()
+                </script>
+            </div>
+        </div>
+    </body>
+</html>
